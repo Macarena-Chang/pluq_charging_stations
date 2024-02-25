@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'locations-service/**'
-      - 'meter-values-service/**'
+      - 'metervalues-service/**'
     branches:
       - master
   pull_request:
@@ -25,5 +25,5 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file locations-service/pom.xml
-    - name: Build with Maven for meter-values-service  
-      run: mvn -B package --file meter-values-service/pom.xml
+    - name: Build with Maven for metervalues-service  
+      run: mvn -B package --file metervalues-service/pom.xml
