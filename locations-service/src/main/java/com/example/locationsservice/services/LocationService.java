@@ -1,6 +1,6 @@
 package com.example.locationsservice.services;
 
-import com.example.locationsservice.models.Location;
+import com.example.locationsservice.entities.Location;
 import com.example.locationsservice.repositories.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

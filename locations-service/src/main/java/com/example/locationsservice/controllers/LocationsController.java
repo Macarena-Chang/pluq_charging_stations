@@ -1,6 +1,6 @@
 package com.example.locationsservice.controllers;
 
-import com.example.locationsservice.models.Location;
+import com.example.locationsservice.entities.Location;
 import com.example.locationsservice.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
