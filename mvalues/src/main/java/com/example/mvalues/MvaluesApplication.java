@@ -1,13 +1,13 @@
-package com.example.metervalues;
+package com.example.mvalues;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MetervaluesServiceApplication {
+public class MvaluesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MetervaluesServiceApplication.class, args);
+		SpringApplication.run(MvaluesApplication.class, args);
 	}
 
 }

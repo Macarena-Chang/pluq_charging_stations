@@ -1,10 +1,10 @@
-package com.example.metervalues;
+package com.example.mvalues;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MetervaluesServiceApplicationTests {
+class MvaluesApplicationTests {
 
 	@Test
 	void contextLoads() {
