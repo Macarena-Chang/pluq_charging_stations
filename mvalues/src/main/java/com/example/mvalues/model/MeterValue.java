@@ -1,23 +1,24 @@
 package com.example.mvalues.model;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.time.Instant;
+
 @Data
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Document(collection = "metervalues")
 public class MeterValue {
-    @Id
-    private String id;
-    private Instant date;
-    private Instant dateAdded;
+    @MongoId
+    private ObjectId _id;
+    private String date;
+    private String dateAdded;
     private String physicalReference;
     private String transactionId;
-    private double meterValue;
+    private Double meterValue;
 
 
 }

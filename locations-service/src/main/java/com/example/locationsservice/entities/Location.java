@@ -10,8 +10,7 @@ import java.util.List;
 @Data
 @Document(collection = "locations")
 public class Location {
-    @MongoId
-    private ObjectId _id;
+
     private String id;
     private String name;
     private String type;
