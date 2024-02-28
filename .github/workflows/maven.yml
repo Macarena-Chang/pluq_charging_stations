@@ -5,6 +5,7 @@ on:
     paths:
       - 'locations-service/**'
       - 'mvalues/**'
+      - 'reporting-service/**'
     branches:
       - master
   pull_request:
@@ -27,3 +28,5 @@ jobs:
       run: mvn -B package --file locations-service/pom.xml
     - name: Build with Maven for mvalues 
       run: mvn -B package --file mvalues/pom.xml
+    - name: Build with Maven for reporting-service
+      run: mvn -B package --file reporting-service/pom.xml
