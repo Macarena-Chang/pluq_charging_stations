@@ -86,7 +86,7 @@ Configured locally to run in different ports.
 
 ## :compass: Roadmap
 
-* [ ] Complete Reporting Microservice (Can already communicate with other services, the report will be constructed by using JSON Parsing With Jackson
+* [ ] Complete Reporting Microservice (Can already communicate with other services, the report will be constructed by using JSON Parsing With Jackson (spring-boot-starter-json)
 * [ ] Unit Testing (JUnit - Mockito)
 * [ ] Include API Gateway
 * [ ] Deploy Microservices
