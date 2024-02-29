@@ -86,11 +86,12 @@ Configured locally to run in different ports.
 
 ## :compass: Roadmap
 
-* [ ] Complete Reporting Microservice
+* [ ] Complete Reporting Microservice (Can already communicate with other services, the report will be constructed by using JSON Parsing With Jackson
 * [ ] Unit Testing (JUnit - Mockito)
 * [ ] Include API Gateway
 * [ ] Deploy Microservices
 * [ ] Exception handling!!
+* [ ] Auth (JWT)
 
 
 ## :handshake: Contact
