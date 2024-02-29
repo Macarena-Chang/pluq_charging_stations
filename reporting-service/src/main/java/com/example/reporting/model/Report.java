@@ -1,13 +1,18 @@
 package com.example.reporting.model;
 
-import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
-
-@RequiredArgsConstructor
-@Document(collection = "reports")
+@Getter
+@Setter
+@AllArgsConstructor
 public class Report {
-
+    private String name;
+    private int chargingSocketsCount;
+    private double energyPrice;
+    private int energyConsumption;
+    private double totalCost;
+    private double latitude;
+    private double longitude;
 }
