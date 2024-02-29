@@ -36,10 +36,15 @@
 - SonarCloud Integration 
 - Microservice architecture
 
-### Microservices
-1- Location Microservice <br>
-2- MeterValues Microservice <br>
-3- Reporting Microservice <br>
+## Microservices
+1- Location Microservice: Save and retrieve Locations from DB. <br> 
+2- MeterValues Microservice: Handle Json from a third party APi. Should Save and Retrieve meter values from DB. <br>
+3- Reporting Microservice: Generate Report  <br>
+ 
+![locations](https://github.com/Macarena-Chang/pluq_charging_stations/assets/18247410/79ee640d-c01a-467c-9f87-9433d69b4355)<br>
+![mvalues](https://github.com/Macarena-Chang/pluq_charging_stations/assets/18247410/b8ebd0fb-eabb-44f5-978d-8307f6bacd58)<br>
+![reporting](https://github.com/Macarena-Chang/pluq_charging_stations/assets/18247410/afd3e976-257c-4c44-adbf-54f84f79ee81)<br>
+
 
 ### :key: Environment Variables
 To run this project, you will need to add the following environment variables to your .env file
