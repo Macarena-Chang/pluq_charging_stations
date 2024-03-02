@@ -1,3 +1,8 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb.8ycg2u6.mongodb.net/?retryWrites=true&w=majority&appName=mongodb
+      database: mongodb
 
 server:
   port: 8200
