@@ -21,8 +21,8 @@ public class ReportingController {
         this.reportingService = reportingService;
     }
 
-    String urlBase = "http://macalipe.33kbps.com.ar/energyPrices"; //json energy values
-    String urlLocation = "https://mvalues.free.beeceptor.com/locations"; //json locations;
+    String urlBase = "http://macalipe.33kbps.com.ar/energyPrices";
+    String urlLocation = "https://mvalues.free.beeceptor.com/locations";
 
 
 
@@ -35,7 +35,7 @@ public class ReportingController {
             }
             return ResponseEntity.ok(reportData);
         } catch (Exception e) {
-            e.printStackTrace();
+          //  e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing your request.");
         }
     }
