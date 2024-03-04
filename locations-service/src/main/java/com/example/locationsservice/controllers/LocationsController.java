@@ -32,6 +32,5 @@ public class LocationsController {
         return new ResponseEntity<>(savedLocation, HttpStatus.CREATED); //201
     }
 
-    //TODO validation location and exception handling. Dtos.
 
 }

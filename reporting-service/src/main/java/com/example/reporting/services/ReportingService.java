@@ -1,6 +1,6 @@
 package com.example.reporting.services;
 
-import com.example.reporting.dto.ReportDTO;
+import com.example.reporting.dto.LocationDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -22,12 +22,14 @@ public class ReportingService {
         this.restTemplate = restTemplate;
     }
 
-    public List<ReportDTO> getLocationData(String city) {
+    public List<LocationDTO> getLocationData(String city) {
+
         String result = restTemplate.getForObject(URL_LOCATION, String.class);
         ObjectMapper mapper = new ObjectMapper();
-        List<ReportDTO> locationData = new ArrayList<>();
+        List<LocationDTO> locationData = new ArrayList<>();
         try {
-            ArrayNode arrayNode = (ArrayNode) mapper.readTree(result);
+            ArrayNode arrayNode =
+                (ArrayNode) mapper.readTree(result);
             for (JsonNode jsonNode : arrayNode) {
                 processLocationNode(jsonNode, city, locationData);
             }
@@ -37,15 +39,28 @@ public class ReportingService {
         return locationData;
     }
 
-    private void processLocationNode(JsonNode jsonNode, String city, List<ReportDTO> locationData) {
+    private void processLocationNode(JsonNode jsonNode, String city, List<LocationDTO> locationData) {
         String cityN = jsonNode.path("city").asText();
+        LocationDTO locationDTO = null;
         if (cityN.equalsIgnoreCase(city)) {
             int chargingSockets = countChargingSockets(jsonNode);
-            ReportDTO reportDTO = new ReportDTO();
-            reportDTO.setCity(city);
-            reportDTO.setChargingSockets(chargingSockets);
-            locationData.add(reportDTO);
+            locationDTO = new LocationDTO();
+            locationDTO.setCity(city);
+            locationDTO.setChargingSockets(chargingSockets);
+
+            JsonNode evses = jsonNode.path("evses");
+            ArrayList<String> uids = new ArrayList<>();
+
+            for (JsonNode evse : evses) {
+                String uid = evse.path("uid").asText();
+                uids.add(uid);
+            }
+            locationDTO.setUids(uids);
         }
+
+        locationData.add(locationDTO);
+
+
     }
 
     private int countChargingSockets(JsonNode locationNode) {
