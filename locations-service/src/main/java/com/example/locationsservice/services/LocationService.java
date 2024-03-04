@@ -22,7 +22,7 @@ public class LocationService {
 
   //retrieve all location data from an external source
   public List<Location> getAllLocationData() {
-    List<Location> locationData = return locationRepository.findAll();
+    List<Location> locationData =  locationRepository.findAll();
     return locationData;
   }
 
