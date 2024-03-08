@@ -21,9 +21,10 @@ public class ReportingController {
     this.reportingService = reportingService;
   }
 
+
   @GetMapping("/report")
   public ResponseEntity<?> getLocationData(@RequestParam String city) {
-
+    city = city.replace("_", " "); // replace underscores with spaces
     try {
       List<LocationDTO> reportData = reportingService.getLocationData(city);
       if (reportData.isEmpty()) {
@@ -36,4 +37,9 @@ public class ReportingController {
           .body("An error occurred while processing your request.");
     }
   }
-}
+
+
+
+  }
+
+

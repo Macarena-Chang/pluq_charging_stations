@@ -1,10 +1,11 @@
 package com.example.mvalues.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.bson.types.ObjectId;
+ import lombok.*;
+
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
+
 
 
 @Data
@@ -13,9 +14,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @RequiredArgsConstructor
 @Document(collection = "metervalues")
 public class MeterValue {
-    @MongoId
-    @JsonIgnore
-    private ObjectId _id;
+    @Id
     private String date;
     private String dateAdded;
     private String physicalReference;
