@@ -109,14 +109,36 @@ public class ReportingService {
       locationDTO.setChargedPerSocket(chargedPerPhysicalReference);
 
       // charged per socket per day
-      Map<String, Map<String, Double>> chargedPerDayPerSocket = calculateChargedPerDayPerSocket(totalchargedpsession);
+     TreeMap<String, TreeMap<String, Double>> chargedPerDayPerSocket = calculateChargedPerDayPerSocket(totalchargedpsession);
       locationDTO.setChargedPerSocketPerDay(chargedPerDayPerSocket);
       logger.info("Charged per day per socket: {}", chargedPerDayPerSocket);
       locationData.add(locationDTO);
+
+      //Generate report
+      genReport(city, locationDTO);
+
     }
 
     return locationData.size();
   }
+
+  public Report genReport(String city, LocationDTO locationDTO) {
+    Report report = new Report();
+    report.setLocationName(city);
+    report.setAmountOfChargingSockets(locationDTO.getChargingSockets());
+    report.setTotalAmountOfKwhCharged(locationDTO.getTotalKwhCharged());
+    report.setAmountOfChargingSessions(locationDTO.getSessions());
+    report.setAmountOfKwhChargedPerSocket(locationDTO.getChargedPerSocket().values().stream()
+        .mapToDouble(Double::doubleValue)
+        .sum());
+    report.setAmountOfKwhChargedPerSession(locationDTO.getChargedKwhPerSession().values().stream()  //charged per session
+        .mapToDouble(SessionInfo::getTotalCharged)
+        .sum());
+    report.setAmountOfKwhChargedPerDayPerSocket(locationDTO.getChargedPerSocketPerDay());
+
+    return report;
+  }
+
 
   private Integer countChargingSockets(JsonNode locationNode) {
     int chargingSockets = 0;
@@ -187,11 +209,13 @@ public class ReportingService {
   }
 
   // calculate kWh charged per day per socket
-  public Map<String, Map<String, Double>> calculateChargedPerDayPerSocket(
+  public TreeMap<String, TreeMap<String, Double>> calculateChargedPerDayPerSocket(
       Map<String, SessionInfo> chargedKwhPerSession) {
     return chargedKwhPerSession.values().stream()
         .collect(Collectors.groupingBy(SessionInfo::getDate,
+            TreeMap::new, //so we can sort it by date
             Collectors.groupingBy(SessionInfo::getPhysicalReference,
+                TreeMap::new, // sort it by identifier
                 Collectors.summingDouble(SessionInfo::getTotalCharged))));
   }
 }

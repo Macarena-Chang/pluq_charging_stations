@@ -1,21 +1,25 @@
 package com.example.reporting.model;
 
+import java.util.TreeMap;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Report {
-  // needs to be modified to include all the data that is needed
-  private String city;
-  private int chargingSockets;
-  private double totalKwhCharged;
-  private int chargingSessions;
-  private double kwhChargedPerSocket;
-  private double kwhChargedPerSession;
-  private double kwhChargedPerDayPerSocket;
+@Data
+@ToString
+  public class Report {
+    private String locationName;
+    private int amountOfChargingSockets;
+    private double totalAmountOfKwhCharged;
+    private int amountOfChargingSessions;
+    private double amountOfKwhChargedPerSocket;
+    private double amountOfKwhChargedPerSession;
+   private TreeMap<String, TreeMap<String, Double>> amountOfKwhChargedPerDayPerSocket;
 
   public Report() {
 

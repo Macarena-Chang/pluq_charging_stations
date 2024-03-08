@@ -48,7 +48,7 @@ import org.springframework.web.client.RestTemplate;
 
     }
   }
-  @PostMapping
+  @PostMapping("/addLocation")
   public ResponseEntity<Location> addLocation(@RequestBody Location location) {
     Location savedLocation = locationService.saveLocation(location);
     return new ResponseEntity<>(savedLocation, HttpStatus.CREATED); //201
