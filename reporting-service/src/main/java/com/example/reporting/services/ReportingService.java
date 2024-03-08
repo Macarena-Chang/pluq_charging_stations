@@ -2,7 +2,6 @@ package com.example.reporting.services;
 
 import com.example.reporting.dto.LocationDTO;
 import com.example.reporting.model.MeterValue;
-import com.example.reporting.model.Report;
 import com.example.reporting.model.SessionInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,6 +31,15 @@ public class ReportingService {
   //private static final String URL_METERVALUES = "http://macalipe.33kbps.com.ar/meterValues";
   private static final String URL_METERVALUES = "http://localhost:8100/metervalues";
   private final RestTemplate restTemplate;
+
+
+    public static String getUrlMetervalues() {
+      return URL_METERVALUES;
+    }
+    public static String getUrlLocation() {
+      return URL_LOCATION;
+    }
+
 
   public ReportingService(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
@@ -65,7 +73,7 @@ public class ReportingService {
     return locationData;
   }
 
-  private int processLocationNode(JsonNode jsonNode, String city, List<LocationDTO> locationData)
+  public int processLocationNode(JsonNode jsonNode, String city, List<LocationDTO> locationData)
       throws Exception {
     String cityN = jsonNode.path("city").asText();
     LocationDTO locationDTO = null;
@@ -120,13 +128,15 @@ public class ReportingService {
       locationData.add(locationDTO);
 
       //Generate report
-      genReport(city, locationDTO);
+     // genReport(city, locationDTO);
 
     }
 
     return locationData.size();
   }
 
+
+/*
   public Report genReport(String city, LocationDTO locationDTO) {
     Report report = new Report();
     report.setLocationName(city);
@@ -144,9 +154,10 @@ public class ReportingService {
 
     return report;
   }
+*/
 
 
-  private Integer countChargingSockets(JsonNode locationNode) {
+  public Integer countChargingSockets(JsonNode locationNode) {
     int chargingSockets = 0;
     JsonNode evsesN = locationNode.path("evses");
     if (evsesN.isArray()) {
@@ -160,7 +171,7 @@ public class ReportingService {
     return chargingSockets;
   }
 
-  private ArrayList<MeterValue> filterMeterValuesByUids(ArrayList<MeterValue> meterValues,
+  public ArrayList<MeterValue> filterMeterValuesByUids(ArrayList<MeterValue> meterValues,
       ArrayList<String> uids) {
     return meterValues.stream()
         .filter(mv -> uids.contains(mv.getPhysicalReference()))
