@@ -2,6 +2,7 @@ package com.example.reporting.services;
 
 import com.example.reporting.dto.LocationDTO;
 import com.example.reporting.model.MeterValue;
+import com.example.reporting.model.Report;
 import com.example.reporting.model.SessionInfo;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +65,8 @@ public class ReportingService {
     return locationData;
   }
 
-  private int processLocationNode(JsonNode jsonNode, String city, List<LocationDTO> locationData) throws Exception {
+  private int processLocationNode(JsonNode jsonNode, String city, List<LocationDTO> locationData)
+      throws Exception {
     String cityN = jsonNode.path("city").asText();
     LocationDTO locationDTO = null;
     ArrayList<String> uids;
@@ -105,11 +108,13 @@ public class ReportingService {
       locationDTO.setTotalKwhCharged(totalKwhCharged);
 
       // charged per socket , uid
-      Map<String, Double> chargedPerPhysicalReference = calculateChargedPerPhysicalReference(totalchargedpsession);
+      Map<String, Double> chargedPerPhysicalReference = calculateChargedPerPhysicalReference(
+          totalchargedpsession);
       locationDTO.setChargedPerSocket(chargedPerPhysicalReference);
 
       // charged per socket per day
-     TreeMap<String, TreeMap<String, Double>> chargedPerDayPerSocket = calculateChargedPerDayPerSocket(totalchargedpsession);
+      TreeMap<String, TreeMap<String, Double>> chargedPerDayPerSocket = calculateChargedPerDayPerSocket(
+          totalchargedpsession);
       locationDTO.setChargedPerSocketPerDay(chargedPerDayPerSocket);
       logger.info("Charged per day per socket: {}", chargedPerDayPerSocket);
       locationData.add(locationDTO);
@@ -131,9 +136,10 @@ public class ReportingService {
     report.setAmountOfKwhChargedPerSocket(locationDTO.getChargedPerSocket().values().stream()
         .mapToDouble(Double::doubleValue)
         .sum());
-    report.setAmountOfKwhChargedPerSession(locationDTO.getChargedKwhPerSession().values().stream()  //charged per session
-        .mapToDouble(SessionInfo::getTotalCharged)
-        .sum());
+    report.setAmountOfKwhChargedPerSession(
+        locationDTO.getChargedKwhPerSession().values().stream()  //charged per session
+            .mapToDouble(SessionInfo::getTotalCharged)
+            .sum());
     report.setAmountOfKwhChargedPerDayPerSocket(locationDTO.getChargedPerSocketPerDay());
 
     return report;
@@ -154,7 +160,8 @@ public class ReportingService {
     return chargingSockets;
   }
 
-  private ArrayList<MeterValue> filterMeterValuesByUids(ArrayList<MeterValue> meterValues, ArrayList<String> uids) {
+  private ArrayList<MeterValue> filterMeterValuesByUids(ArrayList<MeterValue> meterValues,
+      ArrayList<String> uids) {
     return meterValues.stream()
         .filter(mv -> uids.contains(mv.getPhysicalReference()))
         .collect(Collectors.toCollection(ArrayList::new));
@@ -170,7 +177,8 @@ public class ReportingService {
 
   public Map<String, SessionInfo> calculateChargedPerSession(ArrayList<MeterValue> meterValuesList,
       Set<String> sessionsList) {
-    if (meterValuesList == null || meterValuesList.isEmpty() || sessionsList == null || sessionsList.isEmpty()) {
+    if (meterValuesList == null || meterValuesList.isEmpty() || sessionsList == null
+        || sessionsList.isEmpty()) {
       return Collections.emptyMap();
     }
 
@@ -184,7 +192,8 @@ public class ReportingService {
 
       if (!meterValuesForSession.isEmpty()) {
         double firstMeterValue = meterValuesForSession.get(0).getMeterValue();
-        double lastMeterValue = meterValuesForSession.get(meterValuesForSession.size() - 1).getMeterValue();
+        double lastMeterValue = meterValuesForSession.get(meterValuesForSession.size() - 1)
+            .getMeterValue();
         String physicalReference = meterValuesForSession.get(0).getPhysicalReference();
         String date = meterValuesForSession.get(0).getDate();
         totalChargedPerSession.put(sessionId,
@@ -195,7 +204,8 @@ public class ReportingService {
     return totalChargedPerSession;
   }
 
-  public Map<String, Double> calculateChargedPerPhysicalReference(Map<String, SessionInfo> chargedKwhPerSession) {
+  public Map<String, Double> calculateChargedPerPhysicalReference(
+      Map<String, SessionInfo> chargedKwhPerSession) {
     Map<String, Double> chargedPerPhysicalReference = new HashMap<>();
 
     for (SessionInfo sessionInfo : chargedKwhPerSession.values()) {
@@ -218,4 +228,6 @@ public class ReportingService {
                 TreeMap::new, // sort it by identifier
                 Collectors.summingDouble(SessionInfo::getTotalCharged))));
   }
+
+
 }
