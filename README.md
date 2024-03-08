@@ -41,8 +41,15 @@
 ## Microservices
 1- Location Microservice: Save and retrieve Locations from DB. <br> 
 2- MeterValues Microservice: Handle Json from a third party APi. Save and Retrieve meter values from DB. <br>
-3- Reporting Microservice: Generate Report (Report by city, Report for all locations) <br>
-• Report example:
+3- Reporting Microservice: Generate Report (Report by city, Report for all locations) <br>  <br>
+### Report contains:
+        • Location name. 
+        • Amount of charging sockets. 
+        • Total amount of kWh charged. 
+        • Amount of charging sessions. 
+        • Amount of kWh charged per socket. 
+        • Amount of kWh charged per session. 
+        • Amount of kWh charged per day per socket. 
 ```JSON [
     {
         "city": "Dressrosa",
